@@ -31,6 +31,7 @@ class Compass(object):
     def __str__(self):
         return self.head.orientation
 
+
     def new(self, starting):
         self.append('N')
         self.append('E')
@@ -46,18 +47,30 @@ class Compass(object):
 class Rover:
 
     def __init__(self, coord=(0,0, 'E')):
+         
         self.x, self.y, self.face = coord
+
         self.compass = Compass().new(self.face)
 
     def __repr__(self):
         return str(self.coord)
     
     @property
+    def coord(self):
+        return (self.x, self.y)
+
     def orientation(self):
         return str(self.compass).upper()
     
-    def run(self):
-        return True
+    def move(self):
+        if self.orientation() == 'W':
+            self.x -= 1
+        elif self.orientation() == 'E':
+            self.x += 1
+        elif self.orientation() == 'S':
+            self.y -= 1
+        elif self.orientation() == 'N':
+            self.y += 1
 
     def turn_right(self):
         self.compass.turn_right()
